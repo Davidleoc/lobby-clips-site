@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conectando o TikTok — Lobby Clips</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header><a href="index.html" class="logo">Lobby<span>.</span>Clips</a><nav><a href="termos.html">Termos</a><a href="privacidade.html">Privacidade</a></nav></header>
+<main>
+<h1>Conectando o TikTok…</h1>
+<p id="msg">Voltando para o painel do Lobby Clips neste computador.</p>
+<p class="meta">Esta página só repassa a autorização do TikTok para o painel do Lobby Clips que roda no próprio
+computador da equipe (<code>http://localhost:8710</code>). Nenhum dado fica guardado aqui.</p>
+<p id="manual" hidden>Se nada acontecer, confira se o Lobby Clips está aberto <b>neste</b> computador e
+<a id="go" href="#">clique aqui para continuar</a>.</p>
+</main>
+<footer>© 2026 Lobby.Clips · <a href="privacidade.html">Política de Privacidade</a></footer>
+<script>
+  // Repassa ?code=...&state=... (ou ?error=...) do TikTok para o Clipador local.
+  var q = window.location.search || "";
+  var dest = "http://localhost:8710/api/accounts/tiktok/callback" + q;
+  document.getElementById("go").href = dest;
+  if (/error=/.test(q)) {
+    document.getElementById("msg").textContent = "O TikTok não autorizou a conexão. Volte ao painel e tente de novo.";
+  }
+  if (q) { setTimeout(function () { window.location.replace(dest); }, 600); }
+  setTimeout(function () { document.getElementById("manual").hidden = false; }, 4000);
+</script>
+</body>
+</html>
